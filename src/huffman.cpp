@@ -32,7 +32,7 @@ void huffman::generate_huffman_tree (){
 	char c;
 	
 	while((file.get(c))){
-		cout<<c<<endl;
+		// cout<<c<<endl;
 		if(histogram.find(c) == histogram.end()){
 			histogram.insert(pair<char, int>(c, 1));
 		}
@@ -49,6 +49,15 @@ void huffman::generate_huffman_tree (){
 
 	node *left, *right;
 	
+	cout<<"------heap------\n";
+	priority_queue <node*, vector<node*>, comp> test = pq;
+
+	while(!test.empty()){
+		cout<<test.top()->c<<": "<<test.top()->count<<endl;
+		test.pop();
+	}
+	cout<<"------heap------\n";
+
 	while(pq.size() > 1){
 		
 		left = pq.top();
@@ -80,6 +89,7 @@ void huffman::generate_encoding (node *n, int i){
 		// printf("%c: ", n->c);
 		// printf("%s\n", code);
 		// encoding_table.push_back(make_pair(code, n->c));
+		code[i] = '\0';
 		encoding_table[n->c] = code;
 		return;
 	}
