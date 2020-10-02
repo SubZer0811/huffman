@@ -42,7 +42,6 @@ void huffman::generate_huffman_tree (){
 	}
 	histogram['\0'] = 1;
 	for(auto& x : histogram){
-		// std::cout << x.first << ": " << x.second << std::endl;
 		ptr = new node(1, x.first, x.second, NULL, NULL);
 		pq.push(ptr);
 	}
@@ -76,7 +75,6 @@ void huffman::generate_huffman_tree (){
 
 void huffman::show_encoding (){
 	for(auto& x : encoding_table){
-		// cout<<encoding_table[i].first<<" "<<encoding_table[i].second<<endl;
 		cout<<x.first<<": "<< x.second<<endl;
 	}
 }
@@ -86,9 +84,6 @@ void huffman::generate_encoding (node *n, int i){
 	static char code[10];
 
 	if(n->leaf){
-		// printf("%c: ", n->c);
-		// printf("%s\n", code);
-		// encoding_table.push_back(make_pair(code, n->c));
 		code[i] = '\0';
 		encoding_table[n->c] = code;
 		return;
@@ -114,21 +109,7 @@ void huffman::save_compressed_file (){
 		towrite.push_back(' ');
 		towrite.push_back(x.first);
 		
-		/*
-		for(int i=0; i<x.second.length(); i++){
-			enc <<= 1;
-			// cout<<((int)x.second[i] & 1)<<"  ";
-			enc = enc | ((int)x.second[i] & 1);
-			// printf("%x  ", enc);
-		}
-		printf("%x ", enc);
-		cout<<towrite<<endl;
-		file<<enc<<towrite;
-		*/
-
 		file<<x.second<<towrite;
-
-
 	}
 
 	file<<"#";
@@ -172,8 +153,8 @@ void huffman::save_compressed_file (){
 		writeto |= (int)enc[i] & 1;
 		count += 1;
 	}
-	printf("\npost null: %x \n", writeto);
-	printf("\ncount = %d", count);
+	// printf("\npost null: %x \n", writeto);
+	// printf("\ncount = %d", count);
 	if(count){
 		while(count < 8){
 			writeto <<= 1;
@@ -183,7 +164,6 @@ void huffman::save_compressed_file (){
 		file<<writeto;
 	}
 	// printf("%x\n", writeto);
-	//Do stuff to ensure end is padded
 
 	in_file.close();
 	file.close();
@@ -203,14 +183,12 @@ void huffman::uncompress_file (){
 
 	while(c != '#'){
 
-		// int num = (int)c;
 		string code;
 		while(c != ' '){
 			code.push_back(c);
 			file.get(c);
 		}
 
-		// file.get(c);
 		file.get(c);
 		encoding_table[code] = c;
 
@@ -220,7 +198,7 @@ void huffman::uncompress_file (){
 	for(auto x: encoding_table){
 		cout<<x.first<<": "<< x.second<<endl;
 	}
-	cout<<"EO Encoding table:\n\n";
+	cout<<"End Of Encoding table:\n\n";
 	int j=1;
 	unsigned char p;
 	string buf;
