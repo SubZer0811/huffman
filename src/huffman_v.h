@@ -39,7 +39,7 @@ class huffman_v{
 		void uncompress_file();
 		
 		//Constructors
-		huffman_v (string, string);		//first argument: uncompressed file; second argument compressed file
+		huffman_v (string, string, bool);		//first argument: uncompressed file; second argument compressed file
 		huffman_v ();			//use this for calling functions manually
 
 };

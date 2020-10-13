@@ -18,15 +18,15 @@ int main (){
 		cin>>uncomp;
 		cout<<"Enter path to output file: ";
 		cin>>comp;
-		huffman_v huff(uncomp, comp);
+		huffman_v huff(uncomp, comp, i);
 		huff.compress_file();
 	}
 	else{
 		cout<<"Enter path to compressed file: ";
-		cin>>uncomp;
-		cout<<"Enter path to output file: ";
 		cin>>comp;
-		huffman_v huff(comp, uncomp);
+		cout<<"Enter path to output file: ";
+		cin>>uncomp;
+		huffman_v huff(uncomp, comp, i);
 		huff.uncompress_file();
 	}
 

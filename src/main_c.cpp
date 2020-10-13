@@ -17,6 +17,7 @@ int main (int argc, char *argv[]){
 		cout<<"Enter path to output file: ";
 		cin>>comp;
 		huffman_c huff(uncomp, comp);
+		huff.generate_encoding();
 		huff.save_compressed_file();
 	}
 	else{

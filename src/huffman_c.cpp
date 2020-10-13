@@ -16,30 +16,28 @@ void huffman_c::generate_encoding (){
 
 	while((file.get(c))){
 		
+		// printf("%c", c);
 		if(pre_encoding_table.find(c) == pre_encoding_table.end()){
 			pre_encoding_table[c] = 1;
+			count += 1;
 		}
 		else{
 			pre_encoding_table[c] += 1;
 		}
 	}
+	
+	int bits = ceil(log2(count)) + 1;
 
 	for(auto &x : pre_encoding_table){
 		// cout<<x.first<<": "<<x.second<<endl;
-		if(x.second > highest){
-			highest = x.second;
-		}
-	}
-	
-	int bits = ceil(log2(highest));
-	cout<<highest<<" "<<bits<<endl;
-	for(auto &x : pre_encoding_table){
-		// cout<<x.first<<": "<<x.second<<endl;
 		string code;
-		code = convertToBinary(x.second, bits);
+		code = convertToBinary(count, bits);
+		count -= 1;
 		// // cout<<code<<endl;
 		encoding_table[x.first] = code;
 	}
+
+	// show_encoding();
 
 	file.close();
 }
@@ -53,7 +51,7 @@ string huffman_c::convertToBinary(unsigned int n, int bits)
 		code = to_string(temp) + code;
 		n=n/2;
 	}
-	cout<<code.length()<<endl;
+	// cout<<code.length()<<endl;
 	while(code.length() < bits){
 		code = to_string(0) + code;
 	}
@@ -96,7 +94,7 @@ void huffman_c::save_compressed_file (){
 		// cout<<enc<<" ";
 		for(int i=0; i<enc.length(); i++){
 			if(count == 8){
-				printf("%x ", writeto);
+				// printf("%x ", writeto);
 				file<<writeto;
 				count = 0;
 				writeto = 0;
@@ -164,11 +162,11 @@ void huffman_c::uncompress_file (){
 		file.get(c);
 	}
 
-	// cout<<"\n\nEncoding table:\n";
-	// for(auto x: encoding_table){
-	// 	cout<<x.first<<": "<< x.second<<endl;
-	// }
-	// cout<<"End Of Encoding table:\n\n";
+	cout<<"\n\nEncoding table:\n";
+	for(auto x: encoding_table){
+		cout<<x.first<<": "<< x.second<<endl;
+	}
+	cout<<"End Of Encoding table:\n\n";
 	
 	int j=1;
 	unsigned char p;

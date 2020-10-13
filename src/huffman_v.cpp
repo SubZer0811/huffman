@@ -13,9 +13,19 @@ struct comp{
 	}
 };
 
-huffman_v::huffman_v(string uncomp_file, string comp_file){
+huffman_v::huffman_v(string uncomp_file, string comp_file, bool opt){
 	this->uncomp_file = uncomp_file;
 	this->comp_file = comp_file;
+
+	// 1 to compress, 0 to uncompress
+	if(opt){
+		generate_huffman_tree();
+		generate_encoding(tree);
+		save_compressed_file();
+	}
+	else{
+		uncompress_file();
+	}
 }
 
 huffman_v::huffman_v(){
@@ -48,14 +58,14 @@ void huffman_v::generate_huffman_tree (){
 
 	node *left, *right;
 	
-	cout<<"------heap------\n";
-	priority_queue <node*, vector<node*>, comp> test = pq;
+	// cout<<"------heap------\n";
+	// priority_queue <node*, vector<node*>, comp> test = pq;
 
-	while(!test.empty()){
-		cout<<test.top()->c<<": "<<test.top()->count<<endl;
-		test.pop();
-	}
-	cout<<"------heap------\n";
+	// while(!test.empty()){
+	// 	cout<<test.top()->c<<": "<<test.top()->count<<endl;
+	// 	test.pop();
+	// }
+	// cout<<"------heap------\n";
 
 	while(pq.size() > 1){
 		
@@ -69,7 +79,7 @@ void huffman_v::generate_huffman_tree (){
 	}
 
 	tree = pq.top();
-    generate_encoding(tree);
+    // generate_encoding(tree);
 	
 }
 
@@ -127,7 +137,7 @@ void huffman_v::save_compressed_file (){
 		// cout<<enc<<" ";
 		for(int i=0; i<enc.length(); i++){
 			if(count == 8){
-				printf("%x ", writeto);
+				// printf("%x ", writeto);
 				file<<writeto;
 				count = 0;
 				writeto = 0;
@@ -139,12 +149,12 @@ void huffman_v::save_compressed_file (){
 		// printf("%x\n", writeto);
 	}
 
-	printf("\nleft: %x\n", writeto);
+	// printf("\nleft: %x\n", writeto);
 	enc = encoding_table['\0'];
-	cout<<"enc: "<<enc<<endl;
+	// cout<<"enc: "<<enc<<endl;
 	for(int i=0; i<enc.length(); i++){
 		if(count == 8){
-			printf("%x ", writeto);
+			// printf("%x ", writeto);
 			file<<writeto;
 			count = 0;
 			writeto = 0;
@@ -172,8 +182,12 @@ void huffman_v::save_compressed_file (){
 void huffman_v::uncompress_file (){
 	
 	ifstream file;
-	file.open(comp_file, ios::binary);
-
+	
+	cout<<"comp file: "<<comp_file<<endl;
+	cout<<"un_comp file: "<<uncomp_file<<endl;
+	
+	file.open(comp_file);
+	sleep(10);
 	string msg;
 
 	char c;
@@ -194,11 +208,13 @@ void huffman_v::uncompress_file (){
 
 		file.get(c);
 	}
+
 	cout<<"\n\nEncoding table:\n";
 	for(auto x: encoding_table){
 		cout<<x.first<<": "<< x.second<<endl;
 	}
 	cout<<"End Of Encoding table:\n\n";
+	
 	int j=1;
 	unsigned char p;
 	string buf;
@@ -236,11 +252,14 @@ void huffman_v::uncompress_file (){
 		}
 		j += 1;
 	}
+
+	file.close();
+	out_file.close();
 }
 
 void huffman_v::compress_file (){
 
 	generate_huffman_tree();
-	show_encoding();
+	// show_encoding();
 	save_compressed_file();
 }
