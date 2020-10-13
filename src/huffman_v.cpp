@@ -182,12 +182,11 @@ void huffman_v::save_compressed_file (){
 void huffman_v::uncompress_file (){
 	
 	ifstream file;
-	
+	file.open(comp_file, ios::binary);
+
 	cout<<"comp file: "<<comp_file<<endl;
 	cout<<"un_comp file: "<<uncomp_file<<endl;
-	
-	file.open(comp_file);
-	sleep(10);
+
 	string msg;
 
 	char c;

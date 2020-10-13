@@ -10,7 +10,7 @@ using namespace std;
 int main (){
 	
 	int i;
-	cout<<"Press 1 to compress file\nPress 2 to uncompress file\n";
+	cout<<"Press 1 to compress file\nPress 0 to uncompress file\n";
 	cin>>i;
 	string uncomp, comp;
 	if(i == 1){
@@ -19,7 +19,7 @@ int main (){
 		cout<<"Enter path to output file: ";
 		cin>>comp;
 		huffman_v huff(uncomp, comp, i);
-		huff.compress_file();
+		// huff.compress_file();
 	}
 	else{
 		cout<<"Enter path to compressed file: ";
@@ -27,7 +27,7 @@ int main (){
 		cout<<"Enter path to output file: ";
 		cin>>uncomp;
 		huffman_v huff(uncomp, comp, i);
-		huff.uncompress_file();
+		// huff.uncompress_file();
 	}
 
 	return 0;
