@@ -16,6 +16,7 @@ class huffman_c{
 		void save_compressed_file ();
 		void uncompress_file ();
         string convertToBinary (unsigned int, int);
-        huffman_c (string, string);
+        huffman_c (string, string, bool);
+		huffman_c ();
 
 };

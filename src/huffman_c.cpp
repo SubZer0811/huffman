@@ -161,12 +161,6 @@ void huffman_c::uncompress_file (){
 
 		file.get(c);
 	}
-
-	cout<<"\n\nEncoding table:\n";
-	for(auto x: encoding_table){
-		cout<<x.first<<": "<< x.second<<endl;
-	}
-	cout<<"End Of Encoding table:\n\n";
 	
 	int j=1;
 	unsigned char p;
@@ -207,7 +201,16 @@ void huffman_c::uncompress_file (){
 	}
 }
 
-huffman_c::huffman_c(string uncomp_file, string comp_file){
+huffman_c::huffman_c(string uncomp_file, string comp_file, bool opt){
 	this->uncomp_file = uncomp_file;
 	this->comp_file = comp_file;
+
+	// 1 to compress, 0 to uncompress
+	if(opt){
+		generate_encoding();
+		save_compressed_file();
+	}
+	else{
+		uncompress_file();
+	}
 }
