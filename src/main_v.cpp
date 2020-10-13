@@ -23,10 +23,10 @@ int main (){
 	}
 	else{
 		cout<<"Enter path to compressed file: ";
-		cin>>uncomp;
-		cout<<"Enter path to output file: ";
 		cin>>comp;
-		huffman_v huff(comp, uncomp);
+		cout<<"Enter path to output file: ";
+		cin>>uncomp;
+		huffman_v huff(uncomp, comp);
 		huff.uncompress_file();
 	}
 
